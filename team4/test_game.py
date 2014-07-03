@@ -13,6 +13,12 @@ def test_send_word(game):
     assert game.guess('cot') == 2
 
 
+def test_cheat(game):
+    assert game.guess('c') == 1
+
+
 def test_win(game):
     with pytest.raises(WinEvent):
         game.guess('cat')
+    with pytest.raises(WinEvent):
+        assert game.guess('cats') == 1
