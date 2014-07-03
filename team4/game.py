@@ -2,7 +2,7 @@ class WinEvent(Exception):
     pass
 
 
-class Game:
+class Game(object):
 
     def __init__(self, secret):
         self.secret = secret
