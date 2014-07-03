@@ -8,4 +8,4 @@ class Game:
         self.secret = secret
 
     def guess(self, word):
-        return 0
+        return sum(a == b for a, b in zip(self.secret, word))
