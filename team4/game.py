@@ -1,5 +1,5 @@
-import re
 import random
+import re
 from time import sleep
 
 
@@ -50,4 +50,3 @@ if __name__ == '__main__':
         print "Gave up? The secret was {!r}".format(game.secret)
     except WinEvent, e:
         print e
-

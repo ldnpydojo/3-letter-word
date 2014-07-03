@@ -1,5 +1,6 @@
 from random import choice
-from game import Game, WinEvent, build_wordlist
+
+from game import build_wordlist, Game, WinEvent
 
 
 def cull_word_list(word_list, ex_f, ex_s, ex_t):

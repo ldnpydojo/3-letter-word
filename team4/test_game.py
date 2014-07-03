@@ -1,5 +1,6 @@
 import pytest
-from game import Game, WinEvent, dictionary
+
+from game import dictionary, Game, WinEvent
 
 
 @pytest.fixture
