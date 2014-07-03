@@ -24,7 +24,7 @@ with open("CSW07.txt") as f:
 def ask_user(picked_word):
   guess = raw_input("> ")
 
-  if guess == "LOSER":
+  if guess == "IAMALOSER":
     print "The picked word was %s" % picked_word
     return True
 
@@ -50,14 +50,13 @@ if __name__ == '__main__':
        word_end = selected_word.find(',')
        word = selected_word[:word_end]
        definition =  selected_word[word_end:]
-       print "Type LOSER if you want to give up"
+       print "Type IAMALOSER if you want to give up"
        print word, definition
 
        tries = 0
        while True:
         won = ask_user(word)
         if won:
-          print "Game over"
           break
 
         tries += 1
