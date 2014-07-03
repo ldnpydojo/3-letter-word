@@ -4,7 +4,7 @@ import random
 def dictionary():
     with open('/etc/dictionaries-common/words') as f:
         all_words = f.readlines()
-    return [word.lower().strip() for word in all_words if len(word) == 3]
+    return [word.lower().strip() for word in all_words if len(word) == 4]
 
 
 class WinEvent(Exception):
@@ -21,3 +21,9 @@ class Game(object):
         if matches == len(self.secret):
             raise WinEvent("Well done, you won!")
         return matches
+
+if __name__ == '__main__':
+    game = Game()
+    print game.secret
+    while True:
+        print game.guess(raw_input())
