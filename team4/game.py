@@ -1,3 +1,4 @@
+import re
 import random
 from time import sleep
 
@@ -15,7 +16,7 @@ def build_wordlist(file="/etc/dictionaries-common/words"):
 def dictionary():
     with open('/etc/dictionaries-common/words') as f:
         all_words = f.readlines()
-    return [word.lower().strip() for word in all_words if len(word) == 4]
+    return [word.lower().strip() for word in all_words if re.match(r'^\w{3}$', word.strip())]
 
 
 class WinEvent(Exception):
@@ -39,6 +40,14 @@ class Game(object):
 
 if __name__ == '__main__':
     game = Game()
-    print game.secret
-    while True:
-        print game.guess(raw_input())
+    try:
+        while True:
+            print 'Take a guess> ',
+            print game.guess(raw_input())
+    except KeyboardInterrupt:
+        print
+        print
+        print "Gave up? The secret was {!r}".format(game.secret)
+    except WinEvent, e:
+        print e
+
