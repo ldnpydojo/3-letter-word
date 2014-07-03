@@ -1,5 +1,5 @@
 import pytest
-from game import Game, WinEvent
+from game import Game, WinEvent, dictionary
 
 
 @pytest.fixture
@@ -7,11 +7,7 @@ def game():
     return Game('cat')
 
 
-@pytest.fixture
-def dictionary():
-    all_words = open('/etc/dictionaries-common/words').readlines()
-    words = [word.lower().strip() for word in all_words if len(word) == 3]
-    return words
+dictionary = pytest.fixture(dictionary)
 
 
 def test_pick_secret(dictionary):
