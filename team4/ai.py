@@ -78,8 +78,10 @@ def guess(word_list, guess_function, sleep_time):
     return True
   return False
 
+def main(sleep_time=0):
+  game = Game()
+  words = build_dictionary()
+  guess(words, game.guess, sleep_time)
 
 if __name__ == '__main__':
-  game = Game()
-  words = build_wordlist()
-  guess(words, game.guess, sleep_time=0.3)
+    main(sleep_time=0)
