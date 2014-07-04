@@ -2,17 +2,7 @@ import random
 import re
 
 
-def build_wordlist(file="/etc/dictionaries-common/words"):
-  words = []
-  with open(file) as word_file:
-    for line in word_file:
-      word = line.strip().lower()
-      if len(word) == 3 and "'" not in word:
-        words.append(word)
-  return words
-
-
-def dictionary():
+def build_dictionary():
     with open('/etc/dictionaries-common/words') as f:
         all_words = f.readlines()
     return [word.lower().strip() for word in all_words if re.match(r'^\w{3}$', word.strip())]
@@ -24,7 +14,7 @@ class WinEvent(Exception):
 
 class Game(object):
     def __init__(self, secret=None):
-        self.secret = secret or random.choice(dictionary())
+        self.secret = secret or random.choice(build_dictionary())
         self.guesses = 0
 
     def guess(self, word):

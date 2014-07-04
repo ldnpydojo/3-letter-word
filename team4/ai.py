@@ -1,7 +1,7 @@
 from random import choice
 from time import sleep
 
-from game import build_wordlist, Game, WinEvent
+from game import build_dictionary, Game, WinEvent
 
 
 def cull_word_list(word_list, ex_f, ex_s, ex_t):
@@ -60,7 +60,7 @@ def guess(word_list, guess_function, sleep_time):
         new_word = choice(word_list)
         print len(word_list), "words remaining"
         print
-        sleep(0.9)
+        sleep(sleep_time)
         print "Guessing", new_word
         new_score = guess_function(new_word)
         word_list.remove(new_word)
