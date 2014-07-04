@@ -12,36 +12,38 @@ class Game(object):
         self.usable_words = set()
         self.length = int(length)
 
+        #~ self.definite = [set() for i in range(self.length)]
+        #~ self.possible = [set() for i in range(self.length)]
+        #~ self.impossible = [set() for i in range(self.length)]
+
     @staticmethod
     def score(w1, w2):
         return sum(1 for i1, i2 in zip(w1, w2) if i1 == i2)
 
-    def words_from(self, filepath):
-        print("Reading from", filepath)
-        with open(filepath) as f:
-            for word in re.findall(r"\b[A-Za-z]{%d}\b" % self.length, f.read()):
-                yield word.lower()
-
-    def read_usable_words(self):
-        print("Loading usable_words")
-        for source in glob.glob("corpus/*.txt"):
-            self.usable_words.update(self.words_from(source))
-
-    def select_word(self):
+    def select_word1(self):
         return random.choice(list(self.usable_words))
 
-    def update_stats(self, word, score):
+    select_word = select_word1
+
+    def discard_word(self, word):
         self.usable_words.remove(word)
+        self.unusable_words.add(word)
+
+    def update_stats(self, word, score):
+        self.discard_word(word)
+        #
+        # Remove any words with any of the letters in our zero-score
+        # word.
+        #
         if score == 0:
             for usable_word in set(self.usable_words):
                 if any(i1 == i2 for i1, i2 in zip(word, usable_word)):
-                    self.usable_words.remove(usable_word)
-                    self.unusable_words.add(usable_word)
+                    self.discard_word(usable_word)
+
         print("There are %d words left" % len(self.usable_words))
 
     def run(self):
-        with open("words.txt") as f:
-            self.usable_words = set(w.strip() for w in f if len(w) == 1 + self.length)
+        self.usable_words = set(w.strip() for w in open("words.txt") if len(w) == 1 + self.length)
         target_word = random.choice(list(self.usable_words))
         print("Guess:", target_word)
         while True:
