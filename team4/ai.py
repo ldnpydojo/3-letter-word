@@ -74,14 +74,17 @@ def guess(word_list, guess_function, sleep_time):
       except WinEvent, e:
         print e
         return True
-  except WinEvent:
+  except WinEvent, e:
+    print e
     return True
+  print 'FAIL'
   return False
 
 def main(sleep_time=0):
   game = Game()
   words = build_dictionary()
-  guess(words, game.guess, sleep_time)
+  won = guess(words, game.guess, sleep_time)
+  return won
 
 if __name__ == '__main__':
     main(sleep_time=0)

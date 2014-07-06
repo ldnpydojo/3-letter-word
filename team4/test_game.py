@@ -67,4 +67,5 @@ def test_win_at_run_cmd_line(mock_raw_input, capsys):
     run_cmd_line()
     out, err = capsys.readouterr()
     assert 'you won' in out
+    assert 'FAIL' not in out
     assert not err
