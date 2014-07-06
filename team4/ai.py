@@ -1,6 +1,7 @@
 from random import choice
+from time import sleep
 
-from game import build_wordlist, Game, WinEvent
+from game import build_dictionary, Game, WinEvent
 
 
 def cull_word_list(word_list, ex_f, ex_s, ex_t):
@@ -29,7 +30,7 @@ def select_candidate_words(word_list, last_word, score, ex_f, ex_s, ex_t):
   return candidates
 
 
-def guess(word_list, guess_function):
+def guess(word_list, guess_function, sleep_time):
   score = 0
   first_letters, second_letters, third_letters = set(), set(), set()
   word = None
@@ -44,6 +45,8 @@ def guess(word_list, guess_function):
         third_letters.add(t)
         word_list = cull_word_list(word_list, first_letters, second_letters, third_letters)
         print len(word_list), "words remaining"
+        print
+        sleep(sleep_time)
       word = choice(word_list)
       print "Guessing", word
       score = guess_function(word)
@@ -56,6 +59,8 @@ def guess(word_list, guess_function):
       try:
         new_word = choice(word_list)
         print len(word_list), "words remaining"
+        print
+        sleep(sleep_time)
         print "Guessing", new_word
         new_score = guess_function(new_word)
         word_list.remove(new_word)
@@ -66,15 +71,20 @@ def guess(word_list, guess_function):
           score = new_score
         else:
           print "This word is worse, discard"
-      except WinEvent:
-
+      except WinEvent, e:
+        print e
         return True
-  except WinEvent:
+  except WinEvent, e:
+    print e
     return True
+  print 'FAIL'
   return False
 
+def main(sleep_time=0):
+  game = Game()
+  words = build_dictionary()
+  won = guess(words, game.guess, sleep_time)
+  return won
 
 if __name__ == '__main__':
-  game = Game()
-  words = build_wordlist()
-  guess(words, game.guess)
+    main(sleep_time=0)
